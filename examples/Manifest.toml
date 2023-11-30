@@ -1,0 +1,10 @@
+# This file is machine-generated - editing it directly is not advised
+
+julia_version = "1.9.3"
+manifest_format = "2.0"
+project_hash = "cb30eaac01d77f92a250911109c7f2100dfbdb52"
+
+[[deps.HTTPBenchmarkTool]]
+path = ".."
+uuid = "6ab862e0-5df2-4a7d-9564-c22073d003d5"
+version = "1.0.0-DEV"
