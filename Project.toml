@@ -3,5 +3,8 @@ uuid = "6ab862e0-5df2-4a7d-9564-c22073d003d5"
 authors = ["ribardej <ribardej@student.cvut.cz>"]
 version = "1.0.0-DEV"
 
+[deps]
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+
 [compat]
 julia = "1.7"

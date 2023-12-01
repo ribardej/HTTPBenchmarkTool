@@ -1,2 +1,4 @@
 [deps]
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 HTTPBenchmarkTool = "6ab862e0-5df2-4a7d-9564-c22073d003d5"
+Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
