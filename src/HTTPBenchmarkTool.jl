@@ -15,8 +15,9 @@ function benchmark_dummy_v3(url::String, client_n::Int64, req_n::Int64; kwargs..
     time_data = [x.time for x in data]
     requests_per_second = req_n / sum(time_data)
     mean_response_time = sum(time_data) / req_n
-    hist = fit(Histogram, time_data, nbins=200)
+    hist = fit(Histogram, time_data, nbins=20)
     visualize_results(requests_per_second, mean_response_time, hist; kwargs...)
+    println("Time elapsed: ", sum(time_data))
     return Dict(
         "RequestsPerSecond" => requests_per_second,
         "MeanResponseTime" => mean_response_time,
