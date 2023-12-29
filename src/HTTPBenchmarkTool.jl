@@ -2,7 +2,9 @@ module HTTPBenchmarkTool
 
 using HTTP, StatsBase, Plots, StatsPlots, DataFrames
 
-export benchmark, benchmark_specialized
+include("visualizations.jl")
+
+export benchmark, benchmark_divide_conquer, start_simple_http_server
 
 struct MyResponseData
     time::Float16
@@ -16,7 +18,16 @@ function benchmark(url::String; req_each=10000, client_ns=10:10:100, kwargs...)
         val = helper_divide_conquer(url, client_n, req_each; kwargs...)
         df = vcat(df, DataFrame(val))
     end
-    # @df df marginalhist(:NumberOfClients, :ElapsedTime)
+    return df
+end
+
+function benchmark_divide_conquer(url::String; req_each=10000, client_ns=10:10:100, kwargs...)
+    df = DataFrame(NumberOfClients = Int16[], ElapsedTime = Float64[], Status = Int16[])
+    for client_n in client_ns
+        println("Benchmarking with $client_n clients")
+        val = helper_pure_async(url, client_n, req_each; kwargs...)
+        df = vcat(df, DataFrame(val))
+    end
     return df
 end
 
@@ -56,5 +67,11 @@ function make_n_requests(url::String, n::Int64)
     end
     return ret
 end 
+
+function start_simple_http_server(port::Int)
+    router = HTTP.Router()
+    HTTP.register!(router, "GET", "/*", req->HTTP.Response(200, "Only for testing"))
+    HTTP.serve(router, port)
+end
 
 end
