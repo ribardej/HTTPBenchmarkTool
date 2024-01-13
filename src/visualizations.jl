@@ -1,14 +1,31 @@
+# This function scales a specified column in the DataFrame by a power of 10 to improve visualization.
 function base!(data::DataFrame, data_symbol::Symbol)
     data_mean = mean(data[:, data_symbol])
     exp = ceil(-log10(data_mean))
     data[:, data_symbol] .*= 10^exp
 end
 
+"""
+Removes noise from the data by filtering out noise (unwanted values for visualizations).
+Parameters:
+    - data::DataFrame: The input DataFrame.
+    - data_symbol::Symbol: The column symbol for which noise is removed.
+    - std_factor::Int: Standard deviation factor for filtering (default is 2).
+Returns:
+    - data::DataFrame: The input DataFrame with noise removed.
+"""
 function remove_noise_from_data!(data::DataFrame, data_symbol::Symbol; std_factor=2)
-    base!(data, data_symbol)
     data_mean = mean(data[:, data_symbol])
     σ = std(data[:, data_symbol])
     subset!(data, data_symbol => ByRow(x -> abs(x - data_mean) < std_factor*σ))
+end
+
+function remove_noise_from_data!(data::Dict, data_symbol::Symbol; std_factor=2)
+    for (url, df) in data
+        data_mean = mean(df[:, data_symbol])
+        σ = std(df[:, data_symbol])
+        subset!(df, data_symbol => ByRow(x -> abs(x - data_mean) < std_factor*σ))
+    end
 end
 
 function plot_marginalhist(data::DataFrame; kwargs...)
