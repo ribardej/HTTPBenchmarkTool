@@ -6,9 +6,7 @@ HTTP benchmark tool makes possible to simulate traffic on a server and provide s
 ## Functionality
 The main function of the package is the benchmark() function with two methods.
 the parameters of the function are:
-1. 
-    1. url::String: The URL to benchmark.
-    2. urls::Vector{String}: The URLs to benchmark.
+1. url::String: The URL to benchmark. OR urls::Vector{String}: The URLs to benchmark.
 2. pure::Bool: Whether to use the pure async method (default is false).
 3. req_each::Int: Number of requests per client (default is 10000).
 4. client_ns::StepRange{Int}: Range of client numbers (default is 10:10:100).
